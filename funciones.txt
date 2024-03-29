@@ -1,0 +1,71 @@
+#include <iostream>
+using namespace std;
+
+void mostrarM(int** matriz);
+int** crearM(int num);
+int longitudM(int** matriz);
+
+
+
+
+int main()
+{
+ 
+
+mostrarM(crearM(19));
+
+
+
+    return 0;
+}
+
+
+int** crearM(int num){  //Funcion que nos crea la estructura planteada en el problema
+    
+    //Solo recibe numeros enteros impares
+    int vacio= int(num/2);
+    
+    
+    int** matriz = new int*[num];   //Creamos el tamaño de la estrucutura M
+    for (int i=0; i<num;i++){
+        matriz[i]= new int[num];
+    }
+    
+    int cont=1;
+    for(int i=0;i<num;i++){
+        for(int j=0; j<num;j++){
+            
+         if(!(i==vacio  && j==vacio)){      //Si no es el centro de la matriz 
+             matriz[i][j]=cont;
+             cont++;
+         }
+        }
+    }
+    return matriz;
+}   
+
+
+
+void mostrarM(int** matriz){    //Nos muestra la matriz en consola, el segundo parametro...
+ int num = longitudM(matriz);
+    for(int i=0;i<num;i++){            //...es una dimension de la amtriz la cual debe tener las mismas dimensiones
+        for(int j=0; j<num;j++){
+        cout<<matriz[i][j];
+          cout<<" ";
+        }
+        cout<<endl;
+    }
+}
+
+int longitudM(int** matriz){    //Esta funcion nos ayuda a calcular el tamaño de una dimension de una estrucutura M
+    bool ban = true;            
+    int cont=1;
+    while(ban){                   //Recorremos la primera fila de la matriz desde la segunda posicion hasta que encuentre un cero en esa fila...
+        if(matriz[0][cont]==0){  //...cuando encuentra un cero en esa fila de cualquier estrucura M significa que hemos terminado de recorrerlo
+            ban=false;
+        }
+        cont++;
+    }
+   
+    return cont-1;
+}
