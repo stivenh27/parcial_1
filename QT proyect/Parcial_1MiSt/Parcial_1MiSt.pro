@@ -8,6 +8,7 @@ CONFIG += c++17 cmdline
 
 SOURCES += \
         EstructurasMmod.cpp \
+        ModuloClave.cpp \
         main.cpp
 
 # Default rules for deployment.

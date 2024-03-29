@@ -5,7 +5,8 @@ void mostrarM(int** matriz,int tamaño);
 int** crearM(int num);
 int** rotarM(int** matriz,int tamaño, int modo);
 void liberarM(int** matriz, int longitud);
-
+int* agregarDato(int dato, int* arreglo, int longitud); //Esta funcion es necesaria para pedirClave()
+int* pedirClave();
 
 int main()
 {
