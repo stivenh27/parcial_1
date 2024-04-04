@@ -3,7 +3,7 @@ using namespace std;
 int** crearM(int num);
 void liberarM(int**& matriz, int longitud);
 int** rotarM(int** matriz,int tamaño, int modo);
-    void mostrarM(int** matriz,int tamaño);
+void mostrarM(int** matriz,int tamaño);
 
     int* agregarDato(int dato, int* arreglo, int longitud){   //Esta funcion va a alargar el arreglo una posicion y luego le va a agregar el dato que necesitamos
     int* nuevoArreglo = new int[longitud+1];
@@ -20,7 +20,7 @@ int** rotarM(int** matriz,int tamaño, int modo);
 }
 
 int* pedirClave(int& tamaño){
-    cout<<"Ingresa numero por numero la clave a la cual le gustaria encontrar su cerradura, cuanto termine ingrese porfavor (-2) "<<endl;
+    cout << "INGRESE NUMERO POR NUMERO LA CLAVE A LA CUAL DESEA ENCONTRAR LA CERRADURA: " << endl << "PARA TERMINAR INGRESE (-2). " << endl;
 int* arreglo = new int[1];
 int cont=0;
 int numero=0;
