@@ -47,7 +47,7 @@ int main()
     }
 
 
-    int tamañoPre =  coorMayor + 2; // estaba sumado a + (tamaño - 1)
+    int tamañoPre =  coorMayor + (tamaño - 1); // estaba sumado a + (tamaño - 1)
         if(tamañoPre % 2 == 0){    //Tamaño prederterminado que le queremos dar a las matrices
         //Si es par le restamos 1, recordemos que las dimensiones de las matrices siempre es impar
         tamañoPre = tamañoPre - 1;
@@ -76,14 +76,14 @@ int main()
 
 
                     cerradura[posCerra] = tamNuevMatr; //Agregamos al arreglo el tamaño de la matriz, el modo se agregara automaticamente por referencia
-                    int** matrizAux=crearM(tamNuevMatr);
+                    int** matrizAux = crearM(tamNuevMatr);
                     matrizU = rotarM(matrizAux,tamNuevMatr, modos[posCerra]);
                     liberarM(matrizAux, tamNuevMatr);
                     }
 
                 else{  //Hubo un error
-                    error= true;
-                    ban=false;
+                    error = true;
+                    ban = false;
                 }
 
         }
@@ -97,9 +97,9 @@ int main()
             tamNuevMatr = caso2(valor,modos[posCerra],tamañoPre,posX,posY);
                         cout << "bandera despues retorno " << endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
 
-            cerradura[posCerra]=tamNuevMatr; //Agregamos al arreglo el tamaño de la matriz, el modo se agregara automaticamente por referencia
-            int** matrizAux=crearM(tamNuevMatr);
-            matrizU=rotarM(matrizAux,tamNuevMatr, modos[posCerra]);
+            cerradura[posCerra] = tamNuevMatr; //Agregamos al arreglo el tamaño de la matriz, el modo se agregara automaticamente por referencia
+            int** matrizAux = crearM(tamNuevMatr);
+            matrizU = rotarM(matrizAux,tamNuevMatr, modos[posCerra]);
             liberarM(matrizAux, tamNuevMatr);
         }
 
