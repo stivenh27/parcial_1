@@ -36,8 +36,8 @@ int main()
 
 
     //Cordenadas
-    int posX = clave[0];
-    int posY = clave[1];
+    int posX = clave[0] -1;
+    int posY = clave[1] -1;
     int coorMayor = 0;
     if (posX > posY){
         coorMayor = posX;
@@ -47,7 +47,7 @@ int main()
     }
 
 
-    int tamañoPre = (tamaño - 1) + coorMayor;
+    int tamañoPre =  coorMayor + 2; // estaba sumado a + (tamaño - 1)
         if(tamañoPre % 2 == 0){    //Tamaño prederterminado que le queremos dar a las matrices
         //Si es par le restamos 1, recordemos que las dimensiones de las matrices siempre es impar
         tamañoPre = tamañoPre - 1;
@@ -60,7 +60,7 @@ int main()
     cerradura[posCerra] = tamañoPre;
     modos[posCerra] = 0;  //La matriz base siempre va a estar en modo 0
 
-    int tamNuevMatr= tamañoPre;
+    int tamNuevMatr = tamañoPre;
     while(ban){
         posCerra++;
         int valor=matrizU[posX][posY];
@@ -69,19 +69,21 @@ int main()
         if(clave[posClave] == 1){ //Caso (1) A > B
 
             liberarM(matrizU, tamNuevMatr);
-            tamNuevMatr=caso1(valor, modos[posCerra], tamañoPre, posX, posY);
+            tamNuevMatr = caso1(valor, modos[posCerra], tamañoPre, posX, posY);
 
                 if(tamNuevMatr != -1){    //No hubo ningun error
+                    cout << "cumple" << endl;
 
-                cerradura[posCerra] = tamNuevMatr; //Agregamos al arreglo el tamaño de la matriz, el modo se agregara automaticamente por referencia
-                int** matrizAux=crearM(tamNuevMatr);
-                matrizU = rotarM(matrizAux,tamNuevMatr, modos[posCerra]);
-                liberarM(matrizAux, tamNuevMatr);
-                }
+
+                    cerradura[posCerra] = tamNuevMatr; //Agregamos al arreglo el tamaño de la matriz, el modo se agregara automaticamente por referencia
+                    int** matrizAux=crearM(tamNuevMatr);
+                    matrizU = rotarM(matrizAux,tamNuevMatr, modos[posCerra]);
+                    liberarM(matrizAux, tamNuevMatr);
+                    }
 
                 else{  //Hubo un error
-                error= true;
-                ban=false;
+                    error= true;
+                    ban=false;
                 }
 
         }
@@ -89,7 +91,7 @@ int main()
             cerradura[posCerra] = tamNuevMatr; //Agregamos al arreglo el tamaño de la matriz
             modos[posCerra] = modos[posCerra - 1];
         }
-        else if (clave[posClave]==-1){  //Caso (-1) a < b
+        else if (clave[posClave] == -1){  //Caso (-1) a < b
 
             liberarM(matrizU, tamNuevMatr);
             tamNuevMatr = caso2(valor,modos[posCerra],tamañoPre,posX,posY);
