@@ -5,7 +5,7 @@ void liberarM(int**& matriz, int longitud);
 int** rotarM(int** matriz,int tamaño, int modo);
 void mostrarM(int** matriz,int tamaño);
 
-    int* agregarDato(int dato, int* arreglo, int longitud){   //Esta funcion va a alargar el arreglo una posicion y luego le va a agregar el dato que necesitamos
+int* agregarDato(int dato, int* arreglo, int longitud){   //Esta funcion va a alargar el arreglo una posicion y luego le va a agregar el dato que necesitamos
     int* nuevoArreglo = new int[longitud+1];
     for(int i=0; i<=longitud;i++){
         if(i<longitud){

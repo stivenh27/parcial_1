@@ -1,8 +1,6 @@
 #include <iostream>
 using namespace std;
 
-//prueba de guardado automatico.
-
 //Funciones Estructura M
 void mostrarM(int** matriz,int tamaño);
 int** crearM(int num);
@@ -57,7 +55,7 @@ int main()
 
     bool error = false;
 
-    //La primera matriz de la cerradura tendra un tamaño = tamaño+la coordenada mayor para abarcar mas facil el caso K(n1,n2,1,1,1,...)
+    //La primera matriz de la cerradura tendra un tamaño = tamaño + la coordenada mayor para abarcar mas facil el caso K(n1,n2,1,1,1,...)
     int** matrizU = crearM(tamañoPre);
     cerradura[posCerra] = tamañoPre;
     modos[posCerra] = 0;  //La matriz base siempre va a estar en modo 0
@@ -68,7 +66,7 @@ int main()
         int valor=matrizU[posX][posY];
 
         //empieza a evaluar los casos
-        if(clave[posClave] == 1){ //Caso (1) A>B
+        if(clave[posClave] == 1){ //Caso (1) A > B
 
             liberarM(matrizU, tamNuevMatr);
             tamNuevMatr=caso1(valor, modos[posCerra], tamañoPre, posX, posY);
@@ -87,11 +85,11 @@ int main()
                 }
 
         }
-        else if(clave[posClave] == 0){
+        else if(clave[posClave] == 0){ //caso (0) a = b
             cerradura[posCerra] = tamNuevMatr; //Agregamos al arreglo el tamaño de la matriz
             modos[posCerra] = modos[posCerra - 1];
         }
-        else if (clave[posClave]==-1){  //Caso (-1)
+        else if (clave[posClave]==-1){  //Caso (-1) a < b
 
             liberarM(matrizU, tamNuevMatr);
             tamNuevMatr = caso2(valor,modos[posCerra],tamañoPre,posX,posY);

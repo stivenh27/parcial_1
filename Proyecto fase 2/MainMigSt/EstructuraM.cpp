@@ -31,13 +31,13 @@ int** crearM(int num){  //Funcion que nos crea la estructura planteada en el pro
 
 void mostrarM(int** matriz,int tamaño){    //Nos muestra la matriz en consola, el segundo parametro...
 
-    for(int i=0;i<tamaño;i++){            //...es una dimension de la matriz la cual debe tener las mismas dimensiones
-        for(int j=0; j<tamaño;j++){
-            std:: cout<<matriz[i][j];
-        std:: cout<<" ";
+    for(int i = 0;i < tamaño;i++){            //...es una dimension de la matriz la cual debe tener las mismas dimensiones
+        for(int j = 0; j < tamaño;j++){
+            cout << matriz[i][j];
+            cout << " ";
     }
-    cout<<endl;
-}
+    cout << endl;
+    }
 }
 
 
@@ -108,12 +108,12 @@ break;
 
 
 case 0:
-std::cout<<"Dejamos igual la matriz "<<std::endl;
+cout<<"Dejamos igual la matriz "<<std::endl;
 return matrizAux;
 break;
 
 default:
-std::cout<<"No se esta ingresando uno valido "<<std::endl;
+cout<<"No se esta ingresando uno valido "<<std::endl;
 return matrizAux;
 break;
 }
