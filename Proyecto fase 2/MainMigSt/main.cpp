@@ -11,8 +11,8 @@ int mayorModo(int coorX, int coorY, int tamaño);
 //Funciones de Modulo clave
 int* pedirClave(int& tamaño);
 int* agregarDato(int dato, int* arreglo, int longitud); //Esta funcion es necesaria para pedirClave()
-int caso1(int valor,int& casillaModo, int tamañoPre, int coorX, int coorY);
-int caso2(int valor,int& casillaModo, int tamañoPre, int coorX, int coorY);
+int caso1(int valor,int& casillaModo, int tamañoPre, int coorX, int coorY,int&casillaValor);
+int caso2(int valor,int& casillaModo, int tamañoPre, int coorX, int coorY,int& casillaValor);
 
 
 int main()
@@ -26,7 +26,7 @@ int main()
     int* clave = pedirClave(tamaño);    //Almacenamos aca los parametros de la calve
     int* cerradura = new int[tamaño - 1]; //Arreglo que almacenara los tamaños de las matrices
     int* modos = new int[tamaño - 1]; //Guardara los modos en los que necesitamos cada matriz
-    // int* valores = new int[tamaño-1];   //Almacenara los valores de cada matriz
+     int* valores = new int[tamaño-1];   //Almacenara los valores de cada matriz
 
     bool ban = true;
 
@@ -59,28 +59,35 @@ int main()
     int** matrizU = crearM(tamañoPre);
     cerradura[posCerra] = tamañoPre;
     modos[posCerra] = 0;  //La matriz base siempre va a estar en modo 0
+    valores[posCerra]=matrizU[posX][posY];
+    int cualVa=1;   //BORRAR DESPUES------------------------------
+
 
     int tamNuevMatr = tamañoPre;
+    cout<<"Valor1 "<<matrizU[posX][posY]<<endl;
     while(ban){
         posCerra++;
-        int valor=matrizU[posX][posY];
+       // int valor=matrizU[posX][posY];
+
+        cout<<"-----Matriz numero "<<cualVa<<endl;//BORRAR DESPUES------------------------------
+        cualVa++;
+
 
         //empieza a evaluar los casos
-        if(clave[posClave] == 1){ //Caso (1) A > B
 
+        if(clave[posClave] == 1){ //Caso (1) A > B
+            cout<<"-----Ingresa a Caso1 "<<endl;//BORRAR DESPUES------------------------------
             liberarM(matrizU, tamNuevMatr);
-            tamNuevMatr = caso1(valor, modos[posCerra], tamañoPre, posX, posY);
+   cout << "Valor Ingresado al caso1: "<<valores[posCerra-1] << endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
+            tamNuevMatr = caso1(valores[posCerra-1], modos[posCerra], tamañoPre, posX, posY,valores[posCerra]);
 
                 if(tamNuevMatr != -1){    //No hubo ningun error
                     cout << "cumple" << endl;
-
-
                     cerradura[posCerra] = tamNuevMatr; //Agregamos al arreglo el tamaño de la matriz, el modo se agregara automaticamente por referencia
                     int** matrizAux = crearM(tamNuevMatr);
                     matrizU = rotarM(matrizAux,tamNuevMatr, modos[posCerra]);
                     liberarM(matrizAux, tamNuevMatr);
                     }
-
                 else{  //Hubo un error
                     error = true;
                     ban = false;
@@ -88,28 +95,33 @@ int main()
 
         }
         else if(clave[posClave] == 0){ //caso (0) a = b
+            cout << "Valor Ingresado al caso0: "<<valores[posCerra-1] << endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
+
             cerradura[posCerra] = tamNuevMatr; //Agregamos al arreglo el tamaño de la matriz
             modos[posCerra] = modos[posCerra - 1];
+            valores[posCerra]=valores[posCerra-1];
+            cout << "----Valor saliendo caso0: "<<valores[posCerra] << endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
+
         }
         else if (clave[posClave] == -1){  //Caso (-1) a < b
+            cout<<"-----Ingresa a Caso2 "<<cualVa<<endl;//BORRAR DESPUES------------------------------
 
             liberarM(matrizU, tamNuevMatr);
-            tamNuevMatr = caso2(valor,modos[posCerra],tamañoPre,posX,posY);
-                        cout << "bandera despues retorno " << endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
+            cout << "Valor Ingresado al caso2: "<<valores[posCerra-1] << endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
+
+            tamNuevMatr = caso2(valores[posCerra-1],modos[posCerra],tamañoPre,posX,posY,valores[posCerra]);
+                        cout << "bandera despues retorno de caso 2" << endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
 
             cerradura[posCerra] = tamNuevMatr; //Agregamos al arreglo el tamaño de la matriz, el modo se agregara automaticamente por referencia
             int** matrizAux = crearM(tamNuevMatr);
             matrizU = rotarM(matrizAux,tamNuevMatr, modos[posCerra]);
             liberarM(matrizAux, tamNuevMatr);
-        }
-
-
-
-
+        }                                    
         if(posClave == tamaño - 1){ //Condicion de terminacion, termino de recorrer la clave
             ban = false;
         }
         posClave++;
+
     }
 
 
@@ -127,7 +139,12 @@ int main()
         for(int i = 0; i < tamaño - 1; i++){
             cout << modos[i] << " ";
         }
-
+        cout<<endl;
+        cout<<"valores"<<endl;
+        for(int i = 0; i < tamaño - 1; i++){
+            cout << valores[i] << " ";
+        }
+        cout << endl;
 
     }
 

@@ -71,7 +71,7 @@ tamaño = cont;
 }
 
 
-int caso1(int valor,int& casillaModo, int tamañoPre, int coorX, int coorY){ //actual > nueva
+int caso1(int valor,int& casillaModo, int tamañoPre, int coorX, int coorY,int&casillaValor){ //actual > nueva
     // (1) La siguiente matriz debe ser menor en las coordenadas
     //Retornara la siguiente matriz
     int coorMayor = 0;
@@ -87,57 +87,73 @@ int caso1(int valor,int& casillaModo, int tamañoPre, int coorX, int coorY){ //a
     int modo = 0;
     //Nos servira para saber si ya ha rotado todas las veces y no sirve
     bool ban = true;
-    while(ban){
+
         //revisa si encontramos el valor.
         if(matriz[coorX][coorY] < valor){ //Encotramos la matriz que era
-            liberarM(matriz,tamaño);
+             casillaValor=matriz[coorX][coorY];
             casillaModo = modo;
+ cout << "------Valor saliendoDeCaso1: "<<matriz[coorX][coorY] << endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
+            liberarM(matriz,tamaño);
+
+             cout<<"---RETORNO INUSUAL primero de caso1"<<endl;
+
             return tamaño;
         }
-
-        //revisa el tamaño para saber si podemos reducir la matriz.
-        else if (tamaño < 3 || tamaño <= coorMayor){   //No es posible realizar una cerradura;
-            liberarM(matriz,tamaño);
-                return -1;
-            break;
-        }
-
-        //No nos sirve la matriz creada anteriormente
         else{
-            bool ban2 = true;
-            while(ban2){        //Ciclo para las rotaciones de las matrices
-                cout << "longitud: " << tamaño << endl;
-                liberarM(matriz,tamaño);
-                matriz = crearM(tamaño);
-                int** nuevaMat = rotarM(matriz,tamaño, modo);
-                mostrarM(nuevaMat,tamaño);
-                if(nuevaMat[coorX][coorY] >= valor && modo < 4){  //No cumple
-                    modo++;
-                    liberarM(nuevaMat,tamaño);  //Instruccion dañinaaaaa
-                    cout << "modo aumenta a: " << modo << endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
+            while(ban){
+                //revisa el tamaño para saber si podemos reducir la matriz.
+                 if (tamaño < 3 || tamaño < coorMayor){   //No es posible realizar una cerradura;
+                    liberarM(matriz,tamaño);
+                    cout<<"---RETORNO INUSUAL no es posible realizar cerradura"<<endl;
+                    cout << "------Valor saliendoDeCaso1: "<<-1 << endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
+                    return -1;
+                    break;
                 }
-                else if (modo == 4){ //Ya las roto de todas las formas
-                    ban2 = false;
 
-                    cout<<"Modo toca el 4 "<<endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
+                //No nos sirve la matriz creada anteriormente
+                else{
+                    bool ban2 = true;
+                    while(ban2){        //Ciclo para las rotaciones de las matrices
+                        cout << "longitud: " << tamaño << endl;
+                        liberarM(matriz,tamaño);
+                        matriz = crearM(tamaño);
+                        int** nuevaMat = rotarM(matriz,tamaño, modo);
+                        //  mostrarM(nuevaMat,tamaño);
+                        if(nuevaMat[coorX][coorY] >= valor && modo < 4){  //No cumple
+                            modo++;
+                            liberarM(nuevaMat,tamaño);  //Instruccion dañinaaaaa
+                            cout << "modo aumenta a: " << modo << endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
+                        }
+                        else if (modo == 4){ //Ya las roto de todas las formas
 
-                    modo = 0;
-                    tamaño = tamaño - 2;
-                    //coorX = coorX - 1;        //Aumentamos los tamaños de las coordenadas para que se adapten a la nueva matriz
-                    //coorY = coorY - 1;
-                    liberarM(nuevaMat,tamaño);
-                }
-                else if (nuevaMat[coorX][coorY] < valor && modo < 4){
-                casillaModo = modo;
-                return tamaño;
+                            ban2 = false;
+                            cout<<"Modo toca el 4 "<<endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
+                            liberarM(nuevaMat,tamaño);
+                            modo = 0;
+                            tamaño = tamaño - 2;
+                            coorX = coorX - 1;        //Aumentamos los tamaños de las coordenadas para que se adapten a la nueva matriz
+                            coorY = coorY - 1;
+
+                        }
+                        else if (nuevaMat[coorX][coorY] < valor && modo < 4){
+                            casillaValor=nuevaMat[coorX][coorY];
+                            casillaModo = modo;
+                            cout << "------Valor saliendoDeCaso1: "<<nuevaMat[coorX][coorY] << endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
+                            return tamaño;
+                        }
+                    }
                 }
             }
         }
-    }
+
+
+    cout<<"---RETORNO INUSUAL"<<endl;
     return tamaño;
 }
 
-int caso2(int valor,int& casillaModo, int tamañoPre, int coorX, int coorY){ // actual < nueva
+
+
+int caso2(int valor,int& casillaModo, int tamañoPre, int coorX, int coorY,int& casillaValor){ // actual < nueva
     // (-1) La siguiente matriz debe ser menor en las coordenadas
     //Retornara la siguiente matriz
 
@@ -147,22 +163,27 @@ int caso2(int valor,int& casillaModo, int tamañoPre, int coorX, int coorY){ // 
     int modo = 0;
     //Nos servira para saber si ya roto todas las veces y no sirve
     bool ban = true;
-    while(ban){
 
-        if(matriz[coorX][coorY] > valor){ //Encotramos la matriz que era  //El problema esta ACAA
-            liberarM(matriz,tamaño);
+
+        if(matriz[coorX][coorY] > valor){ //Encotramos la matriz que era
+            cout << "Entro al primero condicional Caso2 " << endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
             casillaModo = modo;
+            casillaValor=matriz[coorX][coorY];
+            liberarM(matriz,tamaño);
+
+             cout<<"---RETORNO INUSUAL caso2"<<endl;
             return tamaño;
         }
         else{      //No nos sirve la matriz creada anteriormente
-            cout << "  Tiene que aparecer dos veces que salga del ciclo " << endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
+            while(ban){
+            cout << "  Parte superior del ciclo 2 " << endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
             bool ban2 = true;
             while(ban2){        //Ciclo para las rotaciones
                 cout << "longitud: " << tamaño << endl;
-                liberarM(matriz,tamaño);
+                liberarM(matriz,tamaño-2);
                 matriz = crearM(tamaño);
                 int** nuevaMat = rotarM(matriz,tamaño, modo);
-                mostrarM(nuevaMat,tamaño);
+               // mostrarM(nuevaMat,tamaño);
                 if(nuevaMat[coorX][coorY] <= valor && modo < 4){  //No cumple
                     modo++;
                     liberarM(nuevaMat,tamaño);  //Instruccion dañinaaaaa
@@ -171,24 +192,29 @@ int caso2(int valor,int& casillaModo, int tamañoPre, int coorX, int coorY){ // 
                 else if (modo == 4){ //Ya las roto de todas las formas, entonces aumentamos el tamaño
                     ban2 = false;
                     modo = 0;
-                    cout<<"Modo toca el 4 "<<endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
-                    cout<<"bandera "<<endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
 
-                    tamaño = tamaño + 2;
+                    cout<<"Modo toca el 4 "<<endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
+
+
                     liberarM(nuevaMat,tamaño);  //Instruccion que nos esta dando el error
-                    //coorX = coorX + 1;        //Aumentamos los tamaños de las coordenadas para que se adapten a la nueva matriz
-                    //coorY = coorY + 1;
-                    //cout<<"Instruccion danina"<<endl;
+                    tamaño = tamaño + 2;
+                    coorX++;        //Aumentamos los tamaños de las coordenadas para que se adapten a la nueva matriz
+                    coorY++;
+
                 }
 
 
                 else if (nuevaMat[coorX][coorY] > valor && modo < 4){
+                    casillaValor=nuevaMat[coorX][coorY];
                     casillaModo = modo;   //Mandamos el valor por referencia
+                    cout << "------Valor saliendoDeCaso2: "<<nuevaMat[coorX][coorY] << endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
+
                     return tamaño;
                     break;
                 }
             }
+            }
         }
-    }
+ cout<<"---RETORNO INUSUAL caso2"<<endl;
     return tamaño;
 }
