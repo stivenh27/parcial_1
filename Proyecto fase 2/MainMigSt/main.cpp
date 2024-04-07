@@ -36,8 +36,10 @@ int main()
 
 
     //Cordenadas
-    int posX = clave[0] -1;
+    int posX = clave[0] -1; //Pedimos las coordenadas normales pero les restamos 1 para usarlas adecuadament en programacion
     int posY = clave[1] -1;
+
+
     int coorMayor = 0;
     if (posX > posY){
         coorMayor = posX;
@@ -60,29 +62,18 @@ int main()
     cerradura[posCerra] = tamañoPre;
     modos[posCerra] = 0;  //La matriz base siempre va a estar en modo 0
     valores[posCerra]=matrizU[posX][posY];
-    int cualVa=1;   //BORRAR DESPUES------------------------------
-
 
     int tamNuevMatr = tamañoPre;
-    cout<<"Valor1 "<<matrizU[posX][posY]<<endl;
     while(ban){
         posCerra++;
-       // int valor=matrizU[posX][posY];
-
-        cout<<"-----Matriz numero "<<cualVa<<endl;//BORRAR DESPUES------------------------------
-        cualVa++;
-
 
         //empieza a evaluar los casos
 
         if(clave[posClave] == 1){ //Caso (1) A > B
-            cout<<"-----Ingresa a Caso1 "<<endl;//BORRAR DESPUES------------------------------
             liberarM(matrizU, tamNuevMatr);
-   cout << "Valor Ingresado al caso1: "<<valores[posCerra-1] << endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
             tamNuevMatr = caso1(valores[posCerra-1], modos[posCerra], tamañoPre, posX, posY,valores[posCerra]);
 
                 if(tamNuevMatr != -1){    //No hubo ningun error
-                    cout << "cumple" << endl;
                     cerradura[posCerra] = tamNuevMatr; //Agregamos al arreglo el tamaño de la matriz, el modo se agregara automaticamente por referencia
                     int** matrizAux = crearM(tamNuevMatr);
                     matrizU = rotarM(matrizAux,tamNuevMatr, modos[posCerra]);
@@ -95,23 +86,16 @@ int main()
 
         }
         else if(clave[posClave] == 0){ //caso (0) a = b
-            cout << "Valor Ingresado al caso0: "<<valores[posCerra-1] << endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
 
             cerradura[posCerra] = tamNuevMatr; //Agregamos al arreglo el tamaño de la matriz
             modos[posCerra] = modos[posCerra - 1];
             valores[posCerra]=valores[posCerra-1];
-            cout << "----Valor saliendo caso0: "<<valores[posCerra] << endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
 
         }
         else if (clave[posClave] == -1){  //Caso (-1) a < b
-            cout<<"-----Ingresa a Caso2 "<<cualVa<<endl;//BORRAR DESPUES------------------------------
 
             liberarM(matrizU, tamNuevMatr);
-            cout << "Valor Ingresado al caso2: "<<valores[posCerra-1] << endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
-
             tamNuevMatr = caso2(valores[posCerra-1],modos[posCerra],tamañoPre,posX,posY,valores[posCerra]);
-                        cout << "bandera despues retorno de caso 2" << endl;//BORRARRRR MAS TARDEEEEEEE/////////////////////
-
             cerradura[posCerra] = tamNuevMatr; //Agregamos al arreglo el tamaño de la matriz, el modo se agregara automaticamente por referencia
             int** matrizAux = crearM(tamNuevMatr);
             matrizU = rotarM(matrizAux,tamNuevMatr, modos[posCerra]);
@@ -121,20 +105,40 @@ int main()
             ban = false;
         }
         posClave++;
-
     }
 
 
-
+    //Impresiones
+   cout << endl;
     if(error){
         cout << "No se puede generar una cerradura para esa clave" << endl;
     }
     else{
-        cout << "Cerrradura" << endl;
-        for(int i = 0; i < tamaño - 1; i++){
-            cout << cerradura[i] << " ";
+        cout << "Clave" << endl;
+        cout<<"K(";
+
+        for(int i = 0; i < tamaño; i++){
+            cout << clave[i];
+            if(i!=tamaño-1){
+                cout << ",";
+            }
         }
-    cout << endl;
+        cout<<")"<<endl;
+
+
+        cout << "Cerradura" << endl;
+         cout<<"X(";
+        for(int i = 0; i < tamaño - 1; i++){
+            cout << cerradura[i];
+            if(i!=tamaño-1){
+                cout << ",";
+            }
+        }
+        cout<<")"<<endl;
+
+
+
+
     cout << "Modos" << endl;
         for(int i = 0; i < tamaño - 1; i++){
             cout << modos[i] << " ";
@@ -145,8 +149,17 @@ int main()
             cout << valores[i] << " ";
         }
         cout << endl;
-
     }
+
+
+    delete[] clave;
+    delete[] cerradura;
+    delete[] modos;
+    delete[] valores;
+
+
+
+
 
     return 0;
 }

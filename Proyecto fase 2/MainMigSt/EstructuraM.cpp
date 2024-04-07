@@ -108,12 +108,10 @@ case 3:
 
 
 case 0:
-    cout<<"Dejamos igual la matriz "<<endl;
     return matrizAux;
     break;
 
 default:
-    cout<<"No se esta ingresando uno valido "<<endl;
     return matrizAux;
     break;
     }
