@@ -6,7 +6,6 @@ void mostrarM(int** matriz,int tamaño);
 int** crearM(int num);
 int** rotarM(int** matriz,int tamaño, int modo);
 void liberarM(int**& matriz, int longitud);
-int mayorModo(int coorX, int coorY, int tamaño);
 
 //Funciones de Modulo clave
 int* pedirClave(int& tamaño);
@@ -21,7 +20,7 @@ int main()
     //La funcion de pedirClave nos entregara un arreglo dinamico con los parametros de la clave
     //Le pasaremos un parametro por referencia que nos va ayudar a determinar el tamaño del arreglo dinamico
 
-    int tamaño = 0;   //tamaño del arreglo de la clave
+    int tamaño = 0;   //tamaño del arreglo de la clave, este valor cambiara por referencia
 
     int* clave = pedirClave(tamaño);    //Almacenamos aca los parametros de la calve
     int* cerradura = new int[tamaño - 1]; //Arreglo que almacenara los tamaños de las matrices
@@ -62,51 +61,39 @@ int main()
     cerradura[posCerra] = tamañoPre;
     modos[posCerra] = 0;  //La matriz base siempre va a estar en modo 0
     valores[posCerra]=matrizU[posX][posY];
-
     int tamNuevMatr = tamañoPre;
+    liberarM(matrizU, tamNuevMatr);
+
     while(ban){
         posCerra++;
 
         //empieza a evaluar los casos
 
         if(clave[posClave] == 1){ //Caso (1) A > B
-            liberarM(matrizU, tamNuevMatr);
             tamNuevMatr = caso1(valores[posCerra-1], modos[posCerra], tamañoPre, posX, posY,valores[posCerra]);
 
                 if(tamNuevMatr != -1){    //No hubo ningun error
-                    cerradura[posCerra] = tamNuevMatr; //Agregamos al arreglo el tamaño de la matriz, el modo se agregara automaticamente por referencia
-                    int** matrizAux = crearM(tamNuevMatr);
-                    matrizU = rotarM(matrizAux,tamNuevMatr, modos[posCerra]);
-                    liberarM(matrizAux, tamNuevMatr);
+                    cerradura[posCerra] = tamNuevMatr; //Agregamos al arreglo el tamaño de la matriz, el modo se agregara automaticamente por referencia                 
                     }
                 else{  //Hubo un error
                     error = true;
                     ban = false;
                 }
-
         }
         else if(clave[posClave] == 0){ //caso (0) a = b
-
             cerradura[posCerra] = tamNuevMatr; //Agregamos al arreglo el tamaño de la matriz
             modos[posCerra] = modos[posCerra - 1];
             valores[posCerra]=valores[posCerra-1];
-
         }
-        else if (clave[posClave] == -1){  //Caso (-1) a < b
-
-            liberarM(matrizU, tamNuevMatr);
+        else if (clave[posClave] == -1){  //Caso (-1) a < b     
             tamNuevMatr = caso2(valores[posCerra-1],modos[posCerra],tamañoPre,posX,posY,valores[posCerra]);
-            cerradura[posCerra] = tamNuevMatr; //Agregamos al arreglo el tamaño de la matriz, el modo se agregara automaticamente por referencia
-            int** matrizAux = crearM(tamNuevMatr);
-            matrizU = rotarM(matrizAux,tamNuevMatr, modos[posCerra]);
-            liberarM(matrizAux, tamNuevMatr);
+            cerradura[posCerra] = tamNuevMatr; //Agregamos al arreglo el tamaño de la matriz, el modo se agregara automaticamente por referencia         
         }                                    
         if(posClave == tamaño - 1){ //Condicion de terminacion, termino de recorrer la clave
             ban = false;
         }
         posClave++;
     }
-
 
     //Impresiones
    cout << endl;
@@ -130,14 +117,11 @@ int main()
          cout<<"X(";
         for(int i = 0; i < tamaño - 1; i++){
             cout << cerradura[i];
-            if(i!=tamaño-1){
+            if(i!=tamaño-2){
                 cout << ",";
             }
         }
         cout<<")"<<endl;
-
-
-
 
     cout << "Modos" << endl;
         for(int i = 0; i < tamaño - 1; i++){
@@ -156,10 +140,6 @@ int main()
     delete[] cerradura;
     delete[] modos;
     delete[] valores;
-
-
-
-
 
     return 0;
 }

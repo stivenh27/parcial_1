@@ -49,8 +49,8 @@ int** rotarM(int** matriz,int tamaño, int modo){   //Funcion de rotacion de mat
     matrizAux[i] = new int[tamaño];
     }
 
-    for(int i = 0; i < tamaño; i++){
-        for(int j = 0;j < tamaño; j++){
+    for(int i = 0; i < tamaño; i++){ //Inicializamos la segunda matriz con los valores de la original...
+        for(int j = 0;j < tamaño; j++){ //...por si ingresa un modo no valido retorne la misma y no tener errores
             matrizAux[i][j] = matriz[i][j];
         }
     }
@@ -131,39 +131,3 @@ void liberarM(int**& matriz,int longitud)
 
 
 
-
-int mayorModo(int coorX, int coorY, int tamaño){
-    //Funcion que nos haya el modo donde las coordenadas ingresadas son las mayores
-
-    int** matriz0 = crearM(tamaño);
-    int** matriz1= rotarM(matriz0, tamaño, 1);
-    int** matriz2= rotarM(matriz0, tamaño, 2);
-    int** matriz3= rotarM(matriz0, tamaño, 3);
-    //  Creamos las matrices en los tres modos y en los tre s
-    int num0 = matriz0[coorX][coorY];
-    int num1 = matriz1[coorX][coorY];
-    int num2 = matriz2[coorX][coorY];
-    int num3 = matriz3[coorX][coorY];
-
-    int mayor = 0;
-
-    if(num0 >= num1 && num0 >= num2 && num0 >= num3){
-        mayor = 0;
-    }
-    else if(num1 >= num0 && num1 >= num2 && num1 >= num3){
-        mayor = 1;
-    }
-    else if (num2 >= num1 && num2 >= num0 && num2 >= num3){
-        mayor = 2;
-    }
-    else if (num3 >= num1 && num3 >= num2 && num3 >= num0){
-        mayor = 3;
-    }
-
-    liberarM(matriz0,tamaño);
-    liberarM(matriz1,tamaño);
-    liberarM(matriz2,tamaño);
-    liberarM(matriz3,tamaño);
-
-    return mayor;
-}
